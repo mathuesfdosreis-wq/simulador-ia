@@ -10,7 +10,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post("/simulado", async (req, res) => {
-  const { materia, subtemas, banca, dificuldade, quantidade } = req.body;
+  const { materia, subtemas, banca, dificuldade, quantidade, descricaoProva } = req.body;
 
   try {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -22,8 +22,14 @@ app.post("/simulado", async (req, res) => {
       body: JSON.stringify({
         model: "gpt-4o-mini",
         messages: [
-          { role: "system", content: "Você é um gerador de simulados de concursos." },
-          { role: "user", content: `Gere ${quantidade} questões de ${materia}, com subtemas: ${subtemas}, nível ${dificuldade}, estilo ${banca}.` }
+          {
+            role: "system",
+            content: "Você é um gerador de simulados, capaz de criar questões acadêmicas, concursos ou provas de qualquer instituição conforme solicitado."
+          },
+          {
+            role: "user",
+            content: `Gere ${quantidade} questões de ${materia}, com subtemas: ${subtemas}, nível ${dificuldade}, estilo ${banca}. ${descricaoProva || ""}`
+          }
         ]
       })
     });
@@ -37,6 +43,6 @@ app.post("/simulado", async (req, res) => {
   }
 });
 
-// Porta dinâmica para Render
+// Porta dinâmica exigida pelo Render
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
