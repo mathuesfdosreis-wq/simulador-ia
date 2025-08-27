@@ -1,8 +1,11 @@
 import express from "express";
 import bodyParser from "body-parser";
 import fetch from "node-fetch";
+import cors from "cors"; // <-- Importa o CORS
 
 const app = express();
+
+app.use(cors());          // <-- Habilita CORS para todas as origens
 app.use(bodyParser.json());
 
 app.post("/simulado", async (req, res) => {
