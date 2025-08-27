@@ -1,11 +1,10 @@
-import express from "express";
-import bodyParser from "body-parser";
-import fetch from "node-fetch";
-import cors from "cors"; // Importa CORS
+const express = require("express");
+const bodyParser = require("body-parser");
+const fetch = require("node-fetch");
+const cors = require("cors");
 
 const app = express();
-
-app.use(cors());          // Habilita CORS para todas as origens
+app.use(cors());
 app.use(bodyParser.json());
 
 app.post("/simulado", async (req, res) => {
@@ -21,14 +20,8 @@ app.post("/simulado", async (req, res) => {
       body: JSON.stringify({
         model: "gpt-4o-mini",
         messages: [
-          {
-            role: "system",
-            content: "Você é um gerador de simulados de concursos."
-          },
-          {
-            role: "user",
-            content: `Gere ${quantidade} questões de ${materia}, com subtemas: ${subtemas}, nível ${dificuldade}, estilo ${banca}.`
-          }
+          { role: "system", content: "Você é um gerador de simulados de concursos." },
+          { role: "user", content: `Gere ${quantidade} questões de ${materia}, com subtemas: ${subtemas}, nível ${dificuldade}, estilo ${banca}.` }
         ]
       })
     });
@@ -42,6 +35,5 @@ app.post("/simulado", async (req, res) => {
   }
 });
 
-// Aqui usamos a porta dinâmica que o Render exige
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
