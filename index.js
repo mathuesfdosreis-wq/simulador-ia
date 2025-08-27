@@ -4,6 +4,8 @@ const fetch = require("node-fetch");
 const cors = require("cors");
 
 const app = express();
+
+// Habilita CORS
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -35,5 +37,6 @@ app.post("/simulado", async (req, res) => {
   }
 });
 
+// Porta dinâmica para Render
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
