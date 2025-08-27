@@ -1,11 +1,11 @@
 import express from "express";
 import bodyParser from "body-parser";
 import fetch from "node-fetch";
-import cors from "cors"; // <-- Importa o CORS
+import cors from "cors"; // Importa CORS
 
 const app = express();
 
-app.use(cors());          // <-- Habilita CORS para todas as origens
+app.use(cors());          // Habilita CORS para todas as origens
 app.use(bodyParser.json());
 
 app.post("/simulado", async (req, res) => {
@@ -42,4 +42,6 @@ app.post("/simulado", async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log("Servidor rodando na porta 3000"));
+// Aqui usamos a porta dinâmica que o Render exige
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
